@@ -13,16 +13,25 @@ export default function MainContainer() {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#000000',
+          position: 'absolute',
+          backgroundColor: '#000',
           borderTopWidth: 0,
-          height: 80,
+          height: 50,
+          marginHorizontal: 20,
+          marginBottom: 20,
+          borderRadius: 30,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 10 },
+          shadowOpacity: 0.1,
+          shadowRadius: 5,
+          elevation: 5,
         },
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: '600',
           paddingBottom: 10,
         },
-        tabBarActiveTintColor: '#EEFF00',
+        tabBarActiveTintColor: '#93E13C',
         tabBarInactiveTintColor: '#888888',
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;

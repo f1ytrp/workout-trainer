@@ -1,16 +1,29 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useFonts } from 'expo-font';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Image } from 'react-native';
-import { ScrollView } from 'react-native';
 
 import ExerciseCard from '../components/ExerciseCard';
 
 
 export default function DashboardScreen() {
-    const navigation = useNavigation();
-    const handleStartWorkout = () => {
-        navigation.navigate('WorkoutSession');
+  const navigation = useNavigation();
+
+  const [fontsLoaded] = useFonts({
+    'Montserrat-Bold': require('../assets/fonts/Montserrat/Montserrat-Bold.ttf'),
+    'Montserrat-Medium': require('../assets/fonts/Montserrat/Montserrat-Medium.ttf'),
+    'Montserrat-Regular': require('../assets/fonts/Montserrat/Montserrat-Regular.ttf'),
+    'DMSans-Bold': require('../assets/fonts/DM-sans/DMSans_24pt-Bold.ttf'),
+    'DMSans-Medium': require('../assets/fonts/DM-sans/DMSans_24pt-Medium.ttf'),
+    'DMSans-Regular': require('../assets/fonts/DM-sans/DMSans_24pt-Regular.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return <Text style={{ color: 'white', marginTop: 50 }}>Loading fonts...</Text>;
+  }
+
+  const handleStartWorkout = () => {
+    navigation.navigate('WorkoutSession');
   };
 
   const exercises = [
@@ -19,13 +32,13 @@ export default function DashboardScreen() {
     image: require('../assets/bench-press.png'),
   },
   {
+    name: 'Chest-Fly',
+    image: require('../assets/chest-fly.png'),
+  },
+  {
     name: 'Incline Dumbbell Press',
     image: require('../assets/incline-dumbbell.png'),
   },
-  {
-    name: 'Chest-Fly',
-    image: require('../assets/chest-fly.png'),
-  }
 ];
 
   return (
@@ -38,7 +51,7 @@ export default function DashboardScreen() {
         </TouchableOpacity>
 
         <View style={styles.hrline} />
-        <Text style={styles.header}>Chest exercises</Text>
+        <Text style={styles.header}>Power Up Your Chest</Text>
         
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.exerciseList}>
           {exercises.map((exercise, index) => (
@@ -57,8 +70,8 @@ const styles = StyleSheet.create({
 },
   heading: { 
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#EEFF00',
+    fontFamily: 'DMSans-Bold',
+    color: '#93E13C',
     marginTop: 50,
     marginLeft: 20,
 },
@@ -75,12 +88,13 @@ card: {
 },
 cardTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#EEFF00',
+    color: '#FFFFFF',
+    fontFamily: 'Montserrat-Bold',
 },
 cardSubtext: {
     fontSize: 14,
     color: '#888888',
+    fontFamily: 'Montserrat-Regular',
 },
 cardImage: {
     width: '100%',
@@ -95,8 +109,8 @@ hrline: {
 },
 header: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#EEFF00',
+    fontFamily: 'DMSans-Bold',
+    color: '#93E13C',
     marginBottom: 20,
 },
 exerciseList: {
