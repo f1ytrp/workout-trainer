@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { WebView } from 'react-native-webview'
+
 import { getExerciseByName } from '../utils/getAllExercise';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { WebView } from 'react-native-webview'
+import { saveToCache, loadFromCache } from '../utils/cache';
+
 
 export default function ExerciseDetail() {
   const route = useRoute();
