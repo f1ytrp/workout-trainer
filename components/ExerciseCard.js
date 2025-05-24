@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Pressable, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function ExerciseCard({ exercise }) {
+  const navigation = useNavigation()
+
   return (
     <Pressable
       style={({ pressed }) => [
@@ -11,6 +14,7 @@ export default function ExerciseCard({ exercise }) {
         pressed && { transform: [{ scale: 0.97 }], opacity: 0.9 },
       ]}
       android_ripple={{ color: '#2A2A3F' }}
+      onPress={() => navigation.navigate('ExerciseDetail', { name: exercise.name })}
     >
       <Image source={exercise.image} style={styles.cardImage} />
       <View style={styles.textContainer}>

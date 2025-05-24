@@ -28,15 +28,15 @@ export default function DashboardScreen() {
 
   const exercises = [
   {
-    name: 'Bench Press',
+    name: 'barbell bench press',
     image: require('../assets/bench-press.png'),
   },
   {
-    name: 'Chest-Fly',
+    name: 'chest fly',
     image: require('../assets/chest-fly.png'),
   },
   {
-    name: 'Incline Dumbbell Press',
+    name: 'incline dumbbell press',
     image: require('../assets/incline-dumbbell.png'),
   },
 ];
