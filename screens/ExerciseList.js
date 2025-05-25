@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, Dimensions, ActivityIndicator, } from 'react-native';
+import { View, Text, Image, FlatList, StyleSheet, Dimensions, ActivityIndicator, ScrollView, Modal, Pressable} from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
@@ -10,6 +10,9 @@ const ExerciseList = () => {
 
   const [exercises, setExercises] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [selectedExercise, setSelectedExercise] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const fetchExercises = async () => {
     try {
@@ -34,10 +37,13 @@ const ExerciseList = () => {
   }, [bodyPart]);
 
   const renderItem = ({ item }) => (
-    <View style={styles.card}>
+    <Pressable onPress = {() => {
+        setSelectedExercise(item);
+        setModalVisible(true);
+    }} style={styles.card}>
       <Image source={{ uri: item.gifUrl }} style={styles.image} />
       <Text style={styles.name}>{item.name}</Text>
-    </View>
+    </Pressable>
   );
 
   if (loading) {
@@ -61,6 +67,57 @@ const ExerciseList = () => {
             contentContainerStyle={styles.list}
             showsVerticalScrollIndicator={false}
         />
+        <Modal visible = {modalVisible} animationType = "slide" transparent = {true} onRequestClose = {() => setModalVisible(false)}>
+            <View style={styles.modalOverlay}>
+                <View style={styles.modalContainer}>
+                    <ScrollView contentContainerStyle={styles.scrollContent}>
+                        {selectedExercise ? (
+                        <>
+                            <Text style={styles.name}>{selectedExercise.name}</Text>
+
+                            <View style={styles.imageWrapper}>
+                            <Image
+                                source={{ uri: selectedExercise.gifUrl }}
+                                style={styles.image}
+                            />
+                            </View>
+
+                            <View style={styles.detailsContainer}>
+                            <Text style={styles.detailLabel}>
+                                🎯 Target:{' '}
+                                <Text style={styles.detailValue}>{selectedExercise.target}</Text>
+                            </Text>
+                            <Text style={styles.detailLabel}>
+                                🏋️ Equipment:{' '}
+                                <Text style={styles.detailValue}>{selectedExercise.equipment}</Text>
+                            </Text>
+                            </View>
+
+                            {selectedExercise.instructions && selectedExercise.instructions.length > 0 ? (
+                            <>
+                                <Text style={styles.sectionTitle}>📋 Instructions</Text>
+                                {selectedExercise.instructions.map((step, index) => (
+                                <View key={index} style={styles.instructionItem}>
+                                    <Text style={styles.bulletPoint}>•</Text>
+                                    <Text style={styles.instructionText}>{step.trim()}</Text>
+                                </View>
+                                ))}
+                            </>
+                            ) : (
+                            <Text style={styles.noInstructions}>No instructions available</Text>
+                            )}
+                        </>
+                        ) : (
+                        <Text style={styles.errorText}>No exercise data to display</Text>
+                        )}
+
+                        <Pressable onPress={() => setModalVisible(false)} style={styles.closeButton}>
+                        <Text style={styles.closeButtonText}>Close</Text>
+                        </Pressable>
+                    </ScrollView>
+                </View>
+            </View>
+        </Modal>
     </View>
   )
 }
@@ -116,4 +173,106 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+},
+
+modalContainer: {
+  backgroundColor: '#0E1421',
+  borderTopLeftRadius: 20,
+  borderTopRightRadius: 20,
+  padding: 20,
+  maxHeight: '80%',
+},
+
+scrollContent: {
+  paddingBottom: 30,
+},
+
+imageWrapper: {
+  marginVertical: 12,
+},
+
+image: {
+  width: '100%',
+  height: 250,
+  borderRadius: 12,
+},
+
+detailsContainer: {
+  backgroundColor: '#1A1F2E',
+  borderRadius: 10,
+  padding: 16,
+  marginBottom: 24,
+},
+
+detailLabel: {
+  fontSize: 16,
+  color: '#ccc',
+  marginBottom: 6,
+},
+
+detailValue: {
+  color: '#FFFFFF',
+  fontWeight: '500',
+},
+
+sectionTitle: {
+  fontSize: 20,
+  fontWeight: '600',
+  color: '#93E13C',
+  marginBottom: 12,
+},
+
+instructionItem: {
+  flexDirection: 'row',
+  alignItems: 'flex-start',
+  marginBottom: 10,
+},
+
+bulletPoint: {
+  fontSize: 18,
+  color: '#93E13C',
+  marginRight: 8,
+  lineHeight: 22,
+},
+
+instructionText: {
+  fontSize: 15,
+  color: '#FFFFFF',
+  lineHeight: 22,
+  flex: 1,
+},
+
+noInstructions: {
+  fontSize: 14,
+  fontStyle: 'italic',
+  color: '#AAAAAA',
+  textAlign: 'center',
+  marginTop: 8,
+},
+
+errorText: {
+  fontSize: 16,
+  color: '#FF6B6B',
+  textAlign: 'center',
+  marginTop: 20,
+},
+
+closeButton: {
+  backgroundColor: '#93E13C',
+  marginTop: 20,
+  paddingVertical: 10,
+  borderRadius: 10,
+  alignItems: 'center',
+},
+
+closeButtonText: {
+  color: '#0E1421',
+  fontWeight: 'bold',
+  fontSize: 16,
+},
+
 });

@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import WorkoutSessionNav from './WorkoutSessionNav';
 import ProfileScreen from '../screens/ProfileScreen';
+import BrowseNav from './BrowseNav';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +17,7 @@ export default function MainContainer() {
           position: 'absolute',
           backgroundColor: '#000',
           borderTopWidth: 0,
-          height: 50,
+          height: 55,
           marginHorizontal: 20,
           marginBottom: 20,
           borderRadius: 30,
@@ -37,7 +38,10 @@ export default function MainContainer() {
           let iconName;
           if (route.name === 'Dashboard') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Profile') {
+          } else if (route.name === 'Browse') {
+            iconName = focused ? 'search' : 'search-outline';
+          } 
+          else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
           }
           return <Ionicons name={iconName} size={26} color={color} />;
@@ -45,6 +49,7 @@ export default function MainContainer() {
       })}
     >
       <Tab.Screen name="Dashboard" component={WorkoutSessionNav} />
+      <Tab.Screen name="Browse" component={BrowseNav}/>
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
