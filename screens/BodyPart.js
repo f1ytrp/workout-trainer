@@ -1,8 +1,11 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native'
 import React from 'react'
 import { FlatList } from 'react-native-web'
+import { useNavigation } from '@react-navigation/native';
 
 export default function BodyPart() {
+    const navigation = useNavigation();
+    
     const bodyParts = [
     { id: '1', name: 'Chest', image: require('../assets/images/chest.png') },
     { id: '2', name: 'Back', image: require('../assets/images/back.png') },
@@ -15,10 +18,10 @@ export default function BodyPart() {
     { id: '9', name: 'Neck', image: require('../assets/images/neck.png') },
    ];
     const renderItem = ({ item }) => (
-        <View style={styles.card}>
-        <Image source={item.image} style={styles.image} />
-        <Text style={styles.name}>{item.name}</Text>
-        </View>
+        <Pressable style={styles.card} onPress={() => navigation.navigate('ExerciseList', { bodyPart: item.name })}>
+            <Image source={item.image} style={styles.image} />
+            <Text style={styles.name}>{item.name}</Text>
+        </Pressable>
     );
     return (
         <View style = {styles.container}>
