@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DashboardScreen from '../screens/DashboardScreen';
 import WorkoutSessionScreen from '../screens/WorkoutSessionScreen';
 import ExerciseDetail from '../screens/ExerciseDetail';
+import BodyPart from '../screens/BodyPart';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +17,7 @@ export default function WorkoutSessionNav() {
       }}
     >
       <Stack.Screen name="DashboardMain" component={DashboardScreen} />
-      <Stack.Screen name="WorkoutSession" component={WorkoutSessionScreen} />
+      <Stack.Screen name="WorkoutSession" component={BodyPart} />
       <Stack.Screen 
         name="ExerciseDetail" 
         component={ExerciseDetail}
