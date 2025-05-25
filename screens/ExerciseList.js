@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, FlatList, StyleSheet, Dimensions, ActivityIndicator, ScrollView, Modal, Pressable} from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { loadFromCache, saveToCache } from '../utils/cache';
 
 const { width } = Dimensions.get('window');
 
@@ -15,7 +16,14 @@ const ExerciseList = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const fetchExercises = async () => {
+    const cacheKey = `exercises_${bodyPart.toLowerCase()}`;
     try {
+      const cachedData = await loadFromCache(cacheKey);
+      if (cachedData) {
+        console.log(`[CACHE HIT] Using cached exercises for: ${bodyPart}`);
+        setExercises(cachedData);
+        return;
+      }
       const response = await fetch(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart.toLowerCase()}`, {
         method: 'GET',
         headers: {
@@ -26,6 +34,8 @@ const ExerciseList = () => {
 
       const data = await response.json();
       setExercises(data);
+      await saveToCache(cacheKey, data);
+
     } catch (error) {
       console.error('Fetch error:', error);
     } finally {
@@ -132,6 +142,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#0E1421',
     paddingHorizontal: 20,
     paddingTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   heading: {
     color: 'white',

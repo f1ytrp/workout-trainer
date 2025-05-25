@@ -18,8 +18,7 @@ export default function WorkoutSessionNav() {
       }}
     >
       <Stack.Screen name="DashboardMain" component={DashboardScreen} />
-      <Stack.Screen name="WorkoutSession" component={WorkoutSessionNav} />
-      <Stack.Screen name="ExerciseList" component={ExerciseList} />
+      <Stack.Screen name="WorkoutSession" component={WorkoutSessionScreen} />
       <Stack.Screen 
         name="ExerciseDetail" 
         component={ExerciseDetail}

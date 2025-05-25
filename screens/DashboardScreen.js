@@ -26,7 +26,21 @@ export default function DashboardScreen() {
     navigation.navigate('WorkoutSession');
   };
 
-  const exercises = [
+  const exercises1 = [
+  {
+    name: 'Barbell Bench Press',
+    image: require('../assets/bench-press.png'),
+  },
+  {
+    name: 'Chest Fly',
+    image: require('../assets/chest-fly.png'),
+  },
+  {
+    name: 'incline dumbbell press',
+    image: require('../assets/incline-dumbbell.png'),
+  },
+];
+  const exercises2 = [
   {
     name: 'barbell bench press',
     image: require('../assets/bench-press.png'),
@@ -40,9 +54,8 @@ export default function DashboardScreen() {
     image: require('../assets/incline-dumbbell.png'),
   },
 ];
-
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
         <Text style={styles.heading}>Welcome Back !</Text>
         <TouchableOpacity style={styles.card} onPress={handleStartWorkout}>
             <Image source={ require('../assets/session.jpg')} style={styles.cardImage} />
@@ -51,14 +64,24 @@ export default function DashboardScreen() {
         </TouchableOpacity>
 
         <View style={styles.hrline} />
-        <Text style={styles.header}>Power Up Your Chest</Text>
+        <Text style={styles.header}>Chest Exercises</Text>
+        <View style={{ height: 270, marginBottom: 20 }}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 12 }} style={styles.exerciseList}>
+            {exercises1.map((exercises1, index) => (
+              <ExerciseCard key={index} exercise={exercises1} />
+            ))}
+          </ScrollView>
+        </View>
         
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.exerciseList}>
-          {exercises.map((exercise, index) => (
-            <ExerciseCard key={index} exercise={exercise} />
-          ))}
-        </ScrollView>
-    </View>
+        <Text style={styles.header}>Arm Exercises</Text>
+        <View style={{ height: 270, marginBottom: 20 }}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 12 }} style={styles.exerciseList}>
+            {exercises2.map((exercises2, index) => (
+              <ExerciseCard key={index} exercise={exercises2} />
+            ))}
+          </ScrollView>
+        </View>
+    </ScrollView>
   );
 }
 
