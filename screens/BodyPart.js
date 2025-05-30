@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native'
 import React from 'react'
-import { FlatList } from 'react-native-web'
+import { FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
 export default function BodyPart() {

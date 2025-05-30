@@ -23,8 +23,8 @@ export default function WorkoutSession() {
     }
     return(
         <View style = {styles.container}>
-            <Text style={styles.text}>No exercises in this workout yet.</Text>
-            <Text style={styles.subtext}>Please add exercises to begin.</Text>
+            <Text style={styles.text}>No workouts created yet...</Text>
+            <Text style={styles.subtext}>Create a Workout and add exercises to it to start</Text>
 
             <Animated.View style={[styles.fabContainer, { transform: [{ scale: scaleAnim }] }]}>
                 <TouchableOpacity onPress={handlePress} activeOpacity={0.8}>

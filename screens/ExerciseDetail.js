@@ -62,14 +62,15 @@ export default function ExerciseDetail() {
 
   if (!exerciseData) {
     return (
-      <View style={styles.container}>
+      <View style={styles.container}> 
         <Text style={[styles.name, { color: '#FF6B6B' }]}>No data found for "{name}"</Text>
       </View>
     );
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+    <View style={styles.container}>
+      <ScrollView  style={styles.scrollContent}>
       {exerciseData ? (
         <>
           <Text style={styles.name}>{exerciseData.name}</Text>
@@ -105,6 +106,7 @@ export default function ExerciseDetail() {
         <Text style={styles.errorText}>No exercise data to display</Text>
       )}
     </ScrollView>
+  </View>
   );
 }
 
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
   },
   name: {
-    fontSize: 26,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#93E13C',
     textAlign: 'center',
