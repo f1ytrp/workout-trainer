@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, Dimensions, ActivityIndicator, ScrollView, Modal, Pressable, TouchableOpacity} from 'react-native';
+import { View, Text, Image, FlatList, StyleSheet, Dimensions, ActivityIndicator, ScrollView, Modal, Pressable, TouchableOpacity, TextInput} from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { loadFromCache, saveToCache } from '../utils/cache';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { WebView } from 'react-native-webview'
 import { useWindowDimensions } from 'react-native';
+import useWorkoutStore from '../utils/WorkoutStore';
+import { Picker } from '@react-native-picker/picker';
 
 
 const ExerciseList = () => {
-  const { width } = useWindowDimensions();
+  const { width } = useWindowDimensions(); 
   const cardSize = (width - 60) / 2;
 
   const styles = StyleSheet.create({
@@ -136,39 +137,38 @@ const ExerciseList = () => {
     textAlign: 'center',
     marginTop: 20,
   },
-  closeButton: {
-    backgroundColor: '#93E13C',
-    marginTop: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
+  inputRow: {
+    flexDirection: 'row',
     alignItems: 'center',
+    padding: 8,
+    backgroundColor: '#1E293B',
+    borderRadius: 10,
+    marginBottom: 10,
   },
 
-  closeButtonText: {
+  input: {
+    flex: 1,
+    height: 40,
+    backgroundColor: '#334155',
+    borderRadius: 8,
+    color: '#fff',
+    marginRight: 10,
+    fontSize: 14,
+  },
+
+  okButton: {
+    backgroundColor: '#93E13C',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+  },
+
+  okButtonText: {
     color: '#0E1421',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 14,
   },
 
-  fabContainer: {
-    position: 'absolute',
-    bottom: 60,
-    right: 20,
-    zIndex: 10,
-  },
-  fab: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#93E13C',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
-  },
   scrollContent: {
     paddingBottom: 20,
   },
@@ -182,22 +182,6 @@ const ExerciseList = () => {
     borderTopWidth: 1,
     borderTopColor: '#334155',
   },
-
-  modalButton: {
-    backgroundColor: '#93E13C',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 30,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  modalButtonText: {
-    color: '#0E1421',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
 });
 
   const route = useRoute();
@@ -206,8 +190,18 @@ const ExerciseList = () => {
   const [exercises, setExercises] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const addExerciseToWorkout = useWorkoutStore((state) => state.addExerciseToWorkout);
+  const addWorkout = useWorkoutStore((state) => state.addWorkout);
+  const workouts = useWorkoutStore((state) => state.workouts);
+  const [newWorkoutName, setNewWorkoutName] = useState('');
+
   const [selectedExercise, setSelectedExercise] = useState(null);
+  const [selectedExistingWorkout, setSelectedExistingWorkout] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    console.log('Updated workouts:', workouts);
+  }, [workouts]);
 
   const fetchExercises = async () => {
     const cacheKey = `exercises_${bodyPart.toLowerCase()}`;
@@ -315,15 +309,76 @@ const ExerciseList = () => {
                   <Text style={styles.errorText}>No exercise data to display</Text>
                 )}
               </ScrollView>
+              <View style={{ padding: 16 }}>
+                <Text style={{ color: '#fff', fontSize: 16, marginBottom: 8 }}>Create a New Workout</Text>
+                <View style={styles.inputRow}>
+                  <TextInput
+                    placeholder="Enter workout name"
+                    value={newWorkoutName}
+                    onChangeText={setNewWorkoutName}
+                    style={styles.input}
+                    placeholderTextColor="#ccc"
+                  />
+                  <TouchableOpacity
+                    style={styles.okButton}
+                    onPress={() => {
+                      if (!newWorkoutName.trim()) {
+                        console.log("Workout name is empty.");
+                        return;
+                      }
 
-              <View style={styles.buttonRow}>
-                <Pressable onPress={() => setModalVisible(false)} style={styles.modalButton}>
-                  <Text style={styles.modalButtonText}>Close</Text>
-                </Pressable>
+                      const existingWorkout = workouts.find(w => w.name === newWorkoutName.trim());
 
-                <TouchableOpacity activeOpacity={0.8} style={styles.modalButton}>
-                  <AntDesign name="plus" size={24} color="#0E1421" />
-                </TouchableOpacity>
+                      if (existingWorkout) {
+                        addExerciseToWorkout(newWorkoutName.trim(), selectedExercise);
+                        console.log(`Added to existing workout: ${newWorkoutName}`);
+                      } else {
+                        addWorkout(newWorkoutName.trim(), selectedExercise);
+                        console.log(`Created new workout: ${newWorkoutName}`);
+                      }
+
+                      console.log('Updated workouts:', workouts);
+                      setNewWorkoutName('');
+                      setModalVisible(false);
+                    }}
+                  >
+                    <Text style={styles.okButtonText}>OK</Text>
+                  </TouchableOpacity>
+                </View>
+                {workouts.length > 0 && (
+                  <>
+                    <Text style={{ color: '#fff', fontSize: 16, marginTop: 16, marginBottom: 8 }}>Add to Existing Workout</Text>
+                    <View style={{ backgroundColor: '#fff', borderRadius: 8 }}>
+                      <Picker
+                        selectedValue={selectedExistingWorkout}
+                        onValueChange={(itemValue) => setSelectedExistingWorkout(itemValue)}
+                        style={{ color: '#000' }}
+                      >
+                        <Picker.Item label="Select a workout" value={null} />
+                        {workouts.map((workout) => (
+                          <Picker.Item key={workout.name} label={workout.name} value={workout.name} />
+                        ))}
+                      </Picker>
+                    </View>
+
+                    <TouchableOpacity
+                      style={[styles.okButton, { marginTop: 10 }]}
+                      onPress={() => {
+                        if (!selectedExistingWorkout) {
+                          console.log("No workout selected.");
+                          return;
+                        }
+
+                        addExerciseToWorkout(selectedExistingWorkout, selectedExercise);
+                        console.log(`Added to existing workout: ${selectedExistingWorkout}`);
+                        setSelectedExistingWorkout(null);
+                        setModalVisible(false);
+                      }}
+                    >
+                      <Text style={styles.okButtonText}>Add to Selected</Text>
+                    </TouchableOpacity>
+                  </>
+                )}
               </View>
             </View>
           </View>

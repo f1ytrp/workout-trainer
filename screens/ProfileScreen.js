@@ -16,12 +16,6 @@ export default function ProfileScreen() {
         <Text style={styles.label}>Email:</Text>
         <Text style={styles.value}>placeholder@email.com</Text>
       </View>
-      {/* <View style={styles.statsCard}>
-        <Text style={styles.statTitle}>Workout Stats</Text>
-        <Text style={styles.statItem}>✅ Workouts Completed: 0</Text>
-        <Text style={styles.statItem}>⏱️ Total Time: 0h 0m</Text>
-        <Text style={styles.statItem}>🔥 This Week: 0 sessions</Text>
-      </View> */}
 
       <Text style={styles.header}>Your Workouts 🏋️‍♂️</Text>
       {!hasWorkouts && (
@@ -30,16 +24,6 @@ export default function ProfileScreen() {
           <Text style={styles.emptyText2}>Click on the Browse-Section to add exercises to a new workout (or create a new one). It will appear here! </Text>
         </View>
       )}
-
-
-      {/* <Text style={styles.chartTitle}>Workout Progress 📈</Text>
-      <View style={styles.chartContainer}>
-        <View style={styles.chartPlaceholder}>
-          <Text style={styles.chartPlaceholderText}>
-            No data yet. Start a workout to track your progress.
-          </Text>
-        </View>
-      </View> */}
 
       <Text style={styles.chartTitle}>Workout Progress 📈</Text>
       <View style={styles.activityCard}>

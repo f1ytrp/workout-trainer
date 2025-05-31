@@ -12,7 +12,6 @@ export async function saveToCache(key, data) {
 
 export async function loadFromCache(key) {
   const json = await AsyncStorage.getItem(key);
-  console.log(`[CACHE LOAD] key=${key}, value=${json}`);
 
   if (!json) return null;
 
