@@ -17,7 +17,7 @@ export default function MainContainer() {
           position: 'absolute',
           backgroundColor: '#000',
           borderTopWidth: 0,
-          height: 55,
+          height: 60,
           marginHorizontal: 20,
           marginBottom: 20,
           borderRadius: 30,

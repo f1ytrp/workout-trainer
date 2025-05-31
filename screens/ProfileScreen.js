@@ -4,10 +4,9 @@ import useWorkoutStore  from '../utils/WorkoutStore';
 
 export default function ProfileScreen() {
   const workouts = useWorkoutStore((state) => state.workouts)
-  const hasWorkouts = workouts.length > 0;
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       <Text style={styles.header}>Your Profile 👤</Text>
       <View style={styles.infoCard}>
         <Text style={styles.label}>Name:</Text>
@@ -18,10 +17,26 @@ export default function ProfileScreen() {
       </View>
 
       <Text style={styles.header}>Your Workouts 🏋️‍♂️</Text>
-      {!hasWorkouts && (
+      {workouts.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyText}>You haven't created any workouts yet. </Text>
           <Text style={styles.emptyText2}>Click on the Browse-Section to add exercises to a new workout (or create a new one). It will appear here! </Text>
+        </View>
+      ) : (
+        <View style={styles.activityCard}>
+          <Text style={styles.statTitle}>Workouts Created: {workouts.length}</Text>
+          {workouts.map((workout, index) => (
+            <View style={styles.chartContainer} key={index}>
+              <Text style={styles.workoutTitle}>{index+1}. {workout.name}</Text>
+              <View style={styles.exerciseList}>
+                {workout.exercise.map((ex, idx) => (
+                <Text key={idx} style={styles.exerciseItem}> 
+                  • {ex.name} <Text style={styles.bodyPart}>({ex.bodyPart})</Text>
+                </Text>
+                ))}
+              </View>
+            </View> 
+          ))}
         </View>
       )}
 
@@ -51,6 +66,7 @@ const styles = StyleSheet.create({
     flex: 1, 
     backgroundColor: '#0E1421', 
     padding: 20,
+    paddingTop: 50,
 },
   header: {
     color: '#FFFFFF',
@@ -140,5 +156,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'DMSans-Regular',
     textAlign: 'center',
-  }
+  },
+  exerciseItem: {
+    color: '#E2E8F0',
+    fontSize: 14,
+    marginBottom: 4,
+    fontFamily: 'DMSans-Regular',
+  },
+  scrollContent: {
+    paddingBottom: 140,
+  },
+  exerciseList: {
+    marginTop: 6,
+    paddingLeft: 6,
+  },
+  workoutTitle: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontFamily: 'DMSans-Bold',
+    marginBottom: 8,
+  },
+  bodyPart: {
+    color: '#94A3B8',
+    fontSize: 13,
+    fontFamily: 'DMSans-Regular',
+  },
 })
