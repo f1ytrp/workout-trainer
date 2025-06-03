@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import useWorkoutStore  from '../utils/WorkoutStore';
 import useTotalTimeStore from '../utils/TotalTimeStore';
 import timerFormat from '../components/TimerFormat';
+import DailyChart from '../components/DailyChart';
 
 export default function ProfileScreen() {
   const workouts = useWorkoutStore((state) => state.workouts)
@@ -48,11 +49,15 @@ export default function ProfileScreen() {
       <View style={styles.activityCard}>
         <Text style={styles.statTitle}>Daily Progress</Text>  
         <View style={styles.chartContainer}>
-          <View style={styles.chartPlaceholder}>
-            <Text style={styles.chartPlaceholderText}>
-              No data yet. Start a workout to track your progress.
-            </Text>
-          </View>
+          {totalWorkoutTime > 0 ? (
+            <DailyChart />
+          ) : (
+            <View style={styles.chartPlaceholder}>
+              <Text style={styles.chartPlaceholderText}>
+                No data yet. Start a workout to track your progress.
+              </Text>
+            </View>
+          )}   
         </View>
 
         <Text style={styles.statTitle}>Workout Activity</Text>
