@@ -33,7 +33,7 @@ export default function WorkoutSession() {
     return (
         <View style = {styles.container}>
             {workouts.length === 0 ? (
-            <View style = {styles.container2}>
+            <View style = {styles.container3}>
                 <Text style={styles.text}>No workouts created yet...</Text>
                 <Text style={styles.subtext}>Create a Workout and add exercises to it to start</Text>
                 <Animated.View style={[styles.fabContainer, { transform: [{ scale: scaleAnim }] }]} >
@@ -62,7 +62,7 @@ export default function WorkoutSession() {
                     </View>
                     </View>
                 ))}
-                </ScrollView>
+            </ScrollView>
             )}
         </View>
     );
@@ -104,6 +104,12 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     container2: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 60,
+    },
+    container3: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         paddingBottom: 60,

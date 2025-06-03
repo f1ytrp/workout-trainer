@@ -1,15 +1,23 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import useTimer from './useTimer'; // adjust the path
+import useTimer from './useTimer';
+import useTotalTimeStore from '../utils/TotalTimeStore';
 
 export default function TimerDisplay() {
-  const { time, start, stop, resetTimer, isRunning } = useTimer();
+  const { time, start, stop, resetTimer, isRunning } = useTimer()
+  const logWorkout = useTotalTimeStore(state => state.logWorkout)
 
   const formatTime = (seconds) => {
     const hrs = Math.floor(seconds / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
     return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
+
+  const handleFinish = () => {
+    stop();
+    logWorkout(time);
+    resetTimer();
   };
 
   return (
@@ -23,6 +31,10 @@ export default function TimerDisplay() {
 
         <TouchableOpacity onPress={resetTimer} style={[styles.timerButton, { backgroundColor: '#ff5252' }]}>
           <Text style={styles.timerButtonText}>Reset</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleFinish} style={[styles.timerButton, { backgroundColor: '#ff5252' }]}>
+          <Text style={styles.timerButtonText}>Finish</Text>
         </TouchableOpacity>
       </View>
     </View>

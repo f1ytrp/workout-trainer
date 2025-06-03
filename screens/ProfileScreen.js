@@ -1,9 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import useWorkoutStore  from '../utils/WorkoutStore';
+import useTotalTimeStore from '../utils/TotalTimeStore';
+import timerFormat from '../components/TimerFormat';
 
 export default function ProfileScreen() {
   const workouts = useWorkoutStore((state) => state.workouts)
+  const totalWorkoutTime = useTotalTimeStore((state) => state.totalWorkoutTime);
+  const formattedTime = timerFormat(totalWorkoutTime);
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
@@ -53,7 +57,7 @@ export default function ProfileScreen() {
 
         <Text style={styles.statTitle}>Workout Activity</Text>
         <Text style={styles.statItem}>✅ Workouts Completed: 0</Text>
-        <Text style={styles.statItem}>⏱️ Total Time: 0h 0m</Text>
+        <Text style={styles.statItem}>⏱️ Total Time: {formattedTime}</Text>
         <Text style={styles.statItem}>🔥 This Week: 0 sessions</Text>
       </View>
 
