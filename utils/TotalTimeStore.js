@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useTotalTimeStore = create(
@@ -10,7 +10,6 @@ const useTotalTimeStore = create(
       dailyWorkoutDuration: {},
 
       logWorkout: (duration) => {
-        /* const today = new Date().toISOString().split('T')[0]; */
         const ddmm = new Date();
         const dd = String(ddmm.getDate()).padStart(2, '0');
         const mm = String(ddmm.getMonth() + 1).padStart(2, '0');
@@ -42,7 +41,11 @@ const useTotalTimeStore = create(
     }),
     {
       name: 'total-time-storage',
-      getStorage: () => AsyncStorage,
+      storage: createJSONStorage(() => AsyncStorage),
+      onRehydrateStorage: () => (state) => {
+        console.log('[ZUSTAND] Rehydrating workout-storage from AsyncStorage');
+        console.log('[ZUSTAND] Restored state:', state);
+      }
     }
   )
 );

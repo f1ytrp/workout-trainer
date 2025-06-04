@@ -99,7 +99,7 @@ const ExerciseList = () => {
   },
   detailValue: {
     color: '#FFFFFF',
-    fontWeight: '500',
+    fontFamily: 'DMSans-medium',
   },
   sectionTitle: {
     fontSize: 20,
@@ -111,6 +111,7 @@ const ExerciseList = () => {
     flexDirection: 'row',
     alignItems: 'flex-start',
     marginBottom: 10,
+    fontFamily: 'DMSans-Regular',
   },
   bulletPoint: {
     fontSize: 18,
@@ -123,6 +124,7 @@ const ExerciseList = () => {
     color: '#FFFFFF',
     lineHeight: 22,
     flex: 1,
+    fontFamily: 'DMSans-Regular',
   },
   noInstructions: {
     fontSize: 14,
@@ -158,7 +160,7 @@ const ExerciseList = () => {
 
   okButton: {
     backgroundColor: '#93E13C',
-    paddingVertical: 8,
+    paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 10,
   },
@@ -347,8 +349,8 @@ const ExerciseList = () => {
                 </View>
                 {workouts.length > 0 && (
                   <>
-                    <Text style={{ color: '#fff', fontSize: 16, marginTop: 16, marginBottom: 8 }}>Add to Existing Workout</Text>
-                    <View style={{ backgroundColor: '#fff', borderRadius: 8 }}>
+                    <Text style={{ color: '#fff', fontSize: 16, marginTop: 2, marginBottom: 4 }}>Add to Existing Workout</Text>
+                    <View style={{ backgroundColor: '#fff', borderRadius: 8, height: 40, justifyContent: 'center' }}>
                       <Picker
                         selectedValue={selectedExistingWorkout}
                         onValueChange={(itemValue) => setSelectedExistingWorkout(itemValue)}

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useWorkoutStore = create(persist((set) => ({
@@ -11,15 +11,17 @@ const useWorkoutStore = create(persist((set) => ({
   addExerciseToWorkout: (name, exercise) =>
     set((state) => ({
       workouts: state.workouts.map((workout) =>
-        workout.name === name
-          ? { ...workout, exercise: [...workout.exercise, exercise] }
-          : workout
+        workout.name === name ? { ...workout, exercise: [...workout.exercise, exercise] } : workout
       ),
     })),
 }),
 {
   name: 'workout-storage',
-  getStorage: () => AsyncStorage,
+  storage: createJSONStorage(() => AsyncStorage),
+  onRehydrateStorage: () => (state) => {
+    console.log('[ZUSTAND] Rehydrating workout-storage from AsyncStorage');
+    console.log('[ZUSTAND] Restored state:', state);
+  }
 }));
 
 export default useWorkoutStore;

@@ -31,7 +31,9 @@ export default function BodyPart() {
                 data={bodyParts}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
-                contentContainerStyle={{ paddingBottom: 40 }}
+                contentContainerStyle={{ paddingBottom: 50 }}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
             />
         </View>
     )
