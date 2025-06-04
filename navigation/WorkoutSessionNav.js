@@ -1,13 +1,12 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import DashboardScreen from '../screens/DashboardScreen';
 import WorkoutSessionScreen from '../screens/WorkoutSessionScreen';
 import ExerciseDetail from '../screens/ExerciseDetail';
 import BodyPart from '../screens/BodyPart';
 import ExerciseList from '../screens/ExerciseList';
 
-
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export default function WorkoutSessionNav() {
   return (
@@ -16,6 +15,8 @@ export default function WorkoutSessionNav() {
         headerShown: false,
         headerStyle: { backgroundColor: '#0B0B1F' },
         headerTintColor: '#fff',
+        animationEnabled: true,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
     >
       <Stack.Screen name="DashboardMain" component={DashboardScreen} />

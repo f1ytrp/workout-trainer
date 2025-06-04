@@ -43,8 +43,8 @@ const useTotalTimeStore = create(
       name: 'total-time-storage',
       storage: createJSONStorage(() => AsyncStorage),
       onRehydrateStorage: () => (state) => {
-        console.log('[ZUSTAND] Rehydrating workout-storage from AsyncStorage');
-        console.log('[ZUSTAND] Restored state:', state);
+        console.log('Rehydrating workout-storage from AsyncStorage');
+        console.log('Restored state:', state);
       }
     }
   )

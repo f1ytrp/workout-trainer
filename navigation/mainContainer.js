@@ -34,7 +34,7 @@ export default function MainContainer() {
         },
         tabBarActiveTintColor: '#93E13C',
         tabBarInactiveTintColor: '#888888',
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ focused, color }) => {
           let iconName;
           if (route.name === 'Dashboard') {
             iconName = focused ? 'home' : 'home-outline';

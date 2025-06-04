@@ -1,10 +1,10 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import BodyPart from '../screens/BodyPart';
 import ExerciseList from '../screens/ExerciseList';
 import ExerciseDetail from '../screens/ExerciseDetail';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export default function BrowseNav() {
   return (
@@ -13,6 +13,8 @@ export default function BrowseNav() {
         headerShown: true,
         headerStyle: { backgroundColor: '#0B0B1F' },
         headerTintColor: '#fff',
+        animationEnabled: true,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
     >
       <Stack.Screen name="BodyPart" component={BodyPart} options={{ headerShown: false }} />
