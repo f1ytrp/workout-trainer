@@ -50,7 +50,7 @@ export default function DashboardScreen() {
     image: require('../assets/images/tricep-extension.png'),
   },
   {
-    name: 'Skull Crushers',
+    name: 'Skull Press',
     image: require('../assets/images/skull-crusher.png'),
   },
 ];
