@@ -70,7 +70,7 @@ export default function ExerciseDetail() {
 
   return (
     <View style={styles.container}>
-      <ScrollView  style={styles.scrollContent}>
+      <ScrollView  style={styles.scrollContent} contentContainerStyle={{ paddingBottom: 100 }}>
       {exerciseData ? (
         <>
           <Text style={styles.name}>{exerciseData.name}</Text>

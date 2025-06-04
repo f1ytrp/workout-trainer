@@ -36,26 +36,26 @@ export default function DashboardScreen() {
     image: require('../assets/chest-fly.png'),
   },
   {
-    name: 'incline dumbbell press',
+    name: 'Dumbbell Incline Press',
     image: require('../assets/incline-dumbbell.png'),
   },
 ];
   const exercises2 = [
-  {
-    name: 'barbell bench press',
-    image: require('../assets/bench-press.png'),
+    {
+    name: 'Tricep Extension',
+    image: require('../assets/images/bicep-curl.png'),
   },
   {
-    name: 'chest fly',
-    image: require('../assets/chest-fly.png'),
+    name: 'Dumbbell Biceps curl',
+    image: require('../assets/images/tricep-extension.png'),
   },
   {
-    name: 'incline dumbbell press',
-    image: require('../assets/incline-dumbbell.png'),
+    name: 'Skull Crushers',
+    image: require('../assets/images/skull-crusher.png'),
   },
 ];
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 80 }}>
         <Text style={styles.heading}>Welcome Back !</Text>
         <TouchableOpacity style={styles.card} onPress={handleStartWorkout}>
             <Image source={ require('../assets/session.jpg')} style={styles.cardImage} />
