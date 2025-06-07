@@ -37,11 +37,11 @@ export default function WorkoutSession() {
                 <Text style={styles.text}>No workouts created yet...</Text>
                 <Text style={styles.subtext}>Create a Workout and add exercises to it to start</Text>
                 <Animated.View style={[styles.fabContainer, { transform: [{ scale: scaleAnim }] }]} >
-                <TouchableOpacity onPress={handlePress} activeOpacity={0.8}>
-                    <View style={styles.fab}>
-                    <AntDesign name="plus" size={30} color="white" />
-                    </View>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={handlePress} activeOpacity={0.8}>
+                        <View style={styles.fab}>
+                            <AntDesign name="plus" size={30} color="white" />
+                        </View>
+                    </TouchableOpacity>
                 </Animated.View>
             </View>
             ) : (

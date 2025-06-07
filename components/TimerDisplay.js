@@ -62,11 +62,13 @@ const styles = StyleSheet.create({
   },
   timerControls: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
     gap: 12,
   },
   timerButton: {
     backgroundColor: '#93E13C',
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 8,
   },
@@ -74,5 +76,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontFamily: 'Montserrat-Medium',
+    borderRadius: 8,
+    minWidth: 90,
+    flexShrink: 1,
+    alignItems: 'center',
   },
 });
