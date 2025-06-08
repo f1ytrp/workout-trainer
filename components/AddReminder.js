@@ -2,10 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Notifications from 'expo-notifications';
 
 export default function AddReminder() {
     const [showPicker, setShowPicker] = useState(false);
     const [reminderTime, setReminderTime] = useState(null);
+
+    useEffect(() => {
+        const getPermisson = async () => {
+            const {status} = await Notifications.requestPermissionsAsync();
+            if(status !== 'granted') {
+                alert('You need to enable notifications for reminders to work');
+            }
+        }
+        getPermisson();
+    }, []);
 
     useEffect(() => {
         if (reminderTime) {
@@ -20,6 +31,35 @@ export default function AddReminder() {
         }
     }, [reminderTime]);
 
+    useEffect(() => {
+        Notifications.setNotificationHandler({
+            handleNotification: async () => ({
+                shouldShowAlert: true,
+                shouldPlaySound: true,
+                shouldSetBadge: false,
+            }),
+        })
+    })
+
+    const scheduleNotification = async (time) => {
+        try { 
+            await Notifications.scheduleNotificationAsync({
+                content: {
+                    title: "⏰ Workout Reminder",
+                    body: "It's time for your workout!",
+                    sound: 'default',
+                },
+                trigger: {
+                    hour: time.getHours(),
+                    minute: time.getMinutes(),
+                    repeats: false,
+                },
+            })
+        } catch (err) {
+            console.error('Error scheduling notification:', err);
+        }
+    }
+    
     return (
         <View style={styles.container}>
             <Pressable onPress = {() => setShowPicker(!showPicker)} style = {styles.button}>
@@ -33,7 +73,10 @@ export default function AddReminder() {
                     display="spinner"
                     onChange={(event, selectedTime) => {
                         setShowPicker(false);
-                        if (selectedTime && event.type == 'set') setReminderTime(selectedTime);
+                        if (selectedTime && event.type == 'set'){
+                            setReminderTime(selectedTime);
+                            scheduleNotification(selectedTime);  
+                        }
                     }}
                 />
             )}
