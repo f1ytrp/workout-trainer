@@ -42,7 +42,8 @@ export default function AddReminder() {
     })
 
     const scheduleNotification = async (time) => {
-        try { 
+        try {
+            await Notifications.cancelAllScheduledNotificationsAsync();
             await Notifications.scheduleNotificationAsync({
                 content: {
                     title: "⏰ Workout Reminder",
@@ -52,11 +53,13 @@ export default function AddReminder() {
                 trigger: {
                     hour: time.getHours(),
                     minute: time.getMinutes(),
-                    repeats: false,
+                    repeats: true,
                 },
             })
+            Alert.alert('Reminder set!', `Your workout reminder is set for ${time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`);
         } catch (err) {
             console.error('Error scheduling notification:', err);
+            Alert.alert('Error', 'Failed to set reminder. Please try again.');
         }
     }
     
