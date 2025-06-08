@@ -1,71 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable} from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Notifications from 'expo-notifications';
+import scheduleNotification from './Notification';
 
 export default function AddReminder() {
     const [showPicker, setShowPicker] = useState(false);
     const [reminderTime, setReminderTime] = useState(null);
-
-    useEffect(() => {
-        const getPermisson = async () => {
-            const {status} = await Notifications.requestPermissionsAsync();
-            if(status !== 'granted') {
-                alert('You need to enable notifications for reminders to work');
-            }
-        }
-        getPermisson();
-    }, []);
-
-    useEffect(() => {
-        if (reminderTime) {
-            const storeReminder = async () => {
-                try {
-                    await AsyncStorage.setItem('reminderTime', reminderTime.toISOString());
-                } catch (err) {
-                    console.error('Error saving reminder time:', err);
-                }
-            };
-            storeReminder();
-        }
-    }, [reminderTime]);
-
-    useEffect(() => {
-        Notifications.setNotificationHandler({
-            handleNotification: async () => ({
-                shouldShowAlert: true,
-                shouldPlaySound: true,
-                shouldSetBadge: false,
-            }),
-        })
-    })
-
-    const scheduleNotification = async (time) => {
-        try {
-            await Notifications.cancelAllScheduledNotificationsAsync();
-            await Notifications.scheduleNotificationAsync({
-                content: {
-                    title: "⏰ Workout Reminder",
-                    body: "It's time for your workout!",
-                    sound: 'default',
-                },
-                trigger: {
-                    hour: time.getHours(),
-                    minute: time.getMinutes(),
-                    repeats: true,
-                },
-            })
-            Alert.alert('Reminder set!', `Your workout reminder is set for ${time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`);
-        } catch (err) {
-            console.error('Error scheduling notification:', err);
-            Alert.alert('Error', 'Failed to set reminder. Please try again.');
-        }
-    }
     
     return (
         <View style={styles.container}>
-            <Pressable onPress = {() => setShowPicker(!showPicker)} style = {styles.button}>
+            <Pressable 
+                onPress = {() => setShowPicker(!showPicker)} 
+                style = {({ pressed }) => [
+                    styles.button,
+                    {
+                        transform: [{ scale: pressed ? 0.95 : 1  }],
+                        backgroundColor: pressed ? '#7BCF2A' : '#93E13C',
+                        opacity: pressed ? 0.8 : 1,
+                    }
+                ]}
+            >
                 <Text style = {styles.buttonText}>⏰ Set Reminder Time</Text>
             </Pressable>
             {showPicker && (
@@ -77,15 +31,28 @@ export default function AddReminder() {
                     onChange={(event, selectedTime) => {
                         setShowPicker(false);
                         if (selectedTime && event.type == 'set'){
-                            setReminderTime(selectedTime);
-                            scheduleNotification(selectedTime);  
+                            const now = new Date();
+                            const scheduledTime = new Date(
+                                now.getFullYear(),
+                                now.getMonth(),
+                                now.getDate(),
+                                selectedTime.getHours(),
+                                selectedTime.getMinutes(),
+                                0,
+                                0
+                            );
+                            setReminderTime(scheduledTime);
+                            scheduleNotification(scheduledTime, false);  
                         }
                     }}
                 />
             )}
             {reminderTime && (
                 <Text style={styles.selectedTime}>
-                    Reminder set for: {reminderTime.toLocaleTimeString()}
+                    Reminder set for: {reminderTime.toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                    })}
                 </Text>
             )}
         </View>
