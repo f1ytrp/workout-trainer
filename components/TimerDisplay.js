@@ -71,14 +71,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 8,
+    minWidth: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 1,
   },
   timerButtonText: {
     color: '#fff',
     fontSize: 16,
     fontFamily: 'Montserrat-Medium',
-    borderRadius: 8,
-    minWidth: 90,
-    flexShrink: 1,
-    alignItems: 'center',
   },
 });

@@ -2,8 +2,12 @@ import React, { useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import { Ionicons } from '@expo/vector-icons';
+
 import useWorkoutStore from '../utils/WorkoutStore';
-import TimerDisplay from '../components/TimerDisplay'
+import TimerDisplay from '../components/TimerDisplay';
+import AddReminder from '../components/AddReminder';
+
 
 export default function WorkoutSession() {
     const navigation = useNavigation();
@@ -62,6 +66,13 @@ export default function WorkoutSession() {
                     </View>
                     </View>
                 ))}
+{/*                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 10, justifyContent: 'center' }}>
+                    <TouchableOpacity>
+                        <Ionicons size={26} color="#ffffff" name="add-circle-outline" />
+                    </TouchableOpacity>
+                    <Text style={styles.subheader2}>Add a Reminder!</Text>
+                </View> */}
+                <AddReminder />
             </ScrollView>
             )}
         </View>
@@ -106,7 +117,7 @@ const styles = StyleSheet.create({
     container2: {
         justifyContent: 'center',
         alignItems: 'center',
-        paddingBottom: 60,
+        paddingBottom: 80,
     },
     container3: {
         flex: 1,
@@ -124,6 +135,11 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         fontSize: 24,
         paddingBottom: 20,
+        fontFamily: 'Montserrat-Medium',
+    },
+    subheader2: {
+        color: '#ffffff',
+        fontSize: 24,
         fontFamily: 'Montserrat-Medium',
     },
     workoutCard: {
