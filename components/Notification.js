@@ -7,7 +7,7 @@ Notifications.setNotificationHandler({
     return{
       shouldShowBanner: true,
       shouldShowList: true,
-      shouldPlaySound: true,
+      shouldPlaySound: false,
     }
   },
 });
@@ -15,18 +15,19 @@ Notifications.setNotificationHandler({
 const requestPermission = async () => {
   const { status } = await Notifications.requestPermissionsAsync();
   if (status !== 'granted') {
-    Alert.alert('Permission Denied', 'You need to enable notifications for reminders to work');
+    Alert.alert('lund lele vhai');
   }
 };
 requestPermission();
 
 const scheduleNotification = async (time) => {
+  console.log("Do lund lele vhai");
   try {
     await Notifications.cancelAllScheduledNotificationsAsync();
     await Notifications.scheduleNotificationAsync({
       content: {
         title: "⏰ Workout Reminder",
-        body: "It's time for your workout!",
+        body: "Time to suck your dick",
         sound: 'default',
       },
       trigger: { type: 'date', date: time },
