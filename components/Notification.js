@@ -25,8 +25,8 @@ const scheduleNotification = async (time) => {
     await Notifications.cancelAllScheduledNotificationsAsync();
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "⏰ Workout Reminder",
-        body: "It's time for your workout!",
+        title: "⏰ Krle bhai workout",
+        body: "mera lund kre workout",
         sound: 'default',
       },
       trigger: { type: 'date', date: time },
