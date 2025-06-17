@@ -7,6 +7,8 @@ import { Ionicons } from '@expo/vector-icons';
 import useWorkoutStore from '../utils/WorkoutStore';
 import TimerDisplay from '../components/TimerDisplay';
 import AddReminder from '../components/AddReminder';
+import TimerCircle from '../components/CircularTimer';
+import CircularTimer from '../components/CircularTimer';
 
 
 export default function WorkoutSession() {
@@ -66,13 +68,8 @@ export default function WorkoutSession() {
                     </View>
                     </View>
                 ))}
-{/*                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 10, justifyContent: 'center' }}>
-                    <TouchableOpacity>
-                        <Ionicons size={26} color="#ffffff" name="add-circle-outline" />
-                    </TouchableOpacity>
-                    <Text style={styles.subheader2}>Add a Reminder!</Text>
-                </View> */}
-                <AddReminder />
+                {/* <AddReminder /> */}
+                <CircularTimer />
             </ScrollView>
             )}
         </View>
