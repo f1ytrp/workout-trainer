@@ -42,6 +42,7 @@ export default function WorkoutSession() {
             <View style = {styles.container3}>
                 <Text style={styles.text}>No workouts created yet...</Text>
                 <Text style={styles.subtext}>Create a Workout and add exercises to it to start</Text>
+                <AddReminder />
                 <Animated.View style={[styles.fabContainer, { transform: [{ scale: scaleAnim }] }]} >
                     <TouchableOpacity onPress={handlePress} activeOpacity={0.8}>
                         <View style={styles.fab}>
@@ -68,7 +69,7 @@ export default function WorkoutSession() {
                     </View>
                     </View>
                 ))}
-                {/* <AddReminder /> */}
+          <AddReminder />
                 <CircularTimer />
             </ScrollView>
             )}
