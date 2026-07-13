@@ -1,39 +1,18 @@
-# Data Model Baseline
+# Data Model Boundary
 
-## Current persisted records
+## Phase 1
 
-### Workout store
+Phase 1 creates no confirmed user records and adds no database. Placeholder screens and quick actions must not seed workouts, nutrition, hydration, recovery, bodyweight, or profile data. The DesignGallery uses static component examples only.
 
-AsyncStorage key: `workout-storage`
+## Existing data boundary
 
-```text
-workouts: [{
-  name: string,
-  exercise: Exercise[]
-}]
-```
+The prototype’s AsyncStorage keys (`workout-storage` and `total-time-storage`) are no longer imported by the Phase 1 shell. They are not silently migrated or deleted in this phase. A future database phase must read them through a versioned migration adapter, preserve valid records, surface malformed records as recoverable errors, and write SQLite as the source of truth.
 
-The current store has no schema version or migration function. `Exercise` records are API-shaped objects and are appended to a workout by name.
+## Future ownership
 
-### Total-time store
+- `src/database`: schema and versioned migrations.
+- `src/repositories`: local-first reads/writes.
+- `src/stores`: temporary UI state and active workout only.
+- `src/types`: validated domain records distinguishing suggestions from confirmed user records.
 
-AsyncStorage key: `total-time-storage`
-
-```text
-totalWorkoutTime: number
-lastWorkoutDay: string
-dailyWorkoutDuration: Record<string, number>
-```
-
-The current store has no schema version or migration function.
-
-## Non-persisted or cached data
-
-- ExerciseDB responses use a six-hour AsyncStorage cache.
-- `getAllExercise` also holds a module-level in-memory cache.
-- Active timer state is local component state and interval-driven.
-- Reminder time is not persisted as an application record; the OS notification scheduler is the current external side effect.
-
-## Migration constraints
-
-Future SQLite migrations must preserve existing AsyncStorage workout and total-time data through explicit, versioned transforms. Suggestions and remote exercise records must remain distinguishable from confirmed user workout records.
+Recovery guidance must remain educational and non-medical. No Phase 1 code estimates recovery or diagnoses injury.

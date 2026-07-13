@@ -11,7 +11,7 @@
     "web": "expo start --web",
     "lint": "eslint .",
     "test": "node --test",
-    "typecheck": "node -e \"console.log('TypeScript type checking placeholder: migration not enabled yet.')\"",
+    "typecheck": "tsc --noEmit",
     "doctor": "npx expo-doctor"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "@react-navigation/stack": "^7.3.3",
     "@shopify/react-native-skia": "^2.0.0-next.4",
     "expo": "~53.0.9",
+    "expo-font": "~13.3.2",
     "expo-notifications": "~0.31.3",
     "expo-updates": "~0.28.13",
     "react": "19.0.0",
@@ -41,8 +42,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/react": "~19.0.10",
     "eslint": "^9.39.5",
-    "eslint-config-expo": "~9.2.0"
+    "eslint-config-expo": "~9.2.0",
+    "typescript": "~5.8.3"
   },
   "private": true
 }

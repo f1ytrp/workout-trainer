@@ -5,12 +5,12 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0A0F14"
     },
     "ios": {
       "supportsTablet": true
@@ -18,7 +18,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#0A0F14"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.flytrap.workouttrainer"
@@ -35,6 +35,9 @@
     "updates": {
       "url": "https://u.expo.dev/19dd3155-93c4-42de-8000-3c757adaacbb"
     },
-    "owner": "flytrap"
+    "owner": "flytrap",
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
